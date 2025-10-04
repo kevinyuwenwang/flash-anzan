@@ -135,7 +135,30 @@
             document.getElementById('setup').classList.add('hidden');
             document.getElementById('session').classList.remove('hidden');
             
-            showNextNumber(interval);
+            // Start countdown
+            startCountdown(interval);
+        }
+
+        function startCountdown(interval) {
+            const display = document.getElementById('display');
+            let countdown = 3;
+            
+            // Show initial countdown
+            display.style.fontSize = '48px';
+            display.textContent = `Countdown: ${countdown}`;
+            
+            const countdownTimer = setInterval(() => {
+                countdown--;
+                if (countdown > 0) {
+                    display.textContent = `Countdown: ${countdown}`;
+                } else {
+                    clearInterval(countdownTimer);
+                    display.style.fontSize = '72px';
+                    display.textContent = '';
+                    // Start showing numbers after countdown
+                    setTimeout(() => showNextNumber(interval), 100);
+                }
+            }, 1000);
         }
 
         function showNextNumber(interval) {
@@ -206,7 +229,7 @@
             document.getElementById('session').classList.remove('hidden');
             
             const interval = parseFloat(document.getElementById('interval').value) * 1000;
-            showNextNumber(interval);
+            startCountdown(interval);
         }
 
         function reset() {
